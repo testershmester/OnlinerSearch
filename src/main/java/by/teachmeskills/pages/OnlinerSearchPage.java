@@ -1,6 +1,7 @@
 package by.teachmeskills.pages;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.WebDriverRunner;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -11,12 +12,23 @@ public class OnlinerSearchPage {
     }
 
     public ElementsCollection getSearchResultProductTitles() {
-        switchTo().frame($(".modal-iframe"));
+        switchToSearchFrame();
         return $$(".result__item_product .product__title .product__title-link");
     }
 
-    //TODO check in what frame is the code
     public ElementsCollection getSearchResultProductDetails() {
+        switchToSearchFrame();
         return $$(".product__details .product__description");
+    }
+
+    private void switchToSearchFrame() {
+        if (!isInSearchFrame()) {
+            switchTo().frame($(".modal-iframe"));
+        }
+    }
+
+    public boolean isInSearchFrame() {
+        String frameUrl = WebDriverRunner.currentFrameUrl();
+        return frameUrl.contains("search/iframe");
     }
 }
