@@ -2,21 +2,28 @@ package by.teachmeskills.steps;
 
 import by.teachmeskills.dto.Characteristics;
 import by.teachmeskills.pages.OnlinerSearchPage;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
-import io.cucumber.datatable.DataTable;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
+import io.cucumber.java.After;
 import io.cucumber.java.DataTableType;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.util.List;
+import java.util.Base64;
 import java.util.Map;
 
+import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.map;
 
 public class OnlinerSearchSteps {
 
@@ -24,6 +31,9 @@ public class OnlinerSearchSteps {
 
     @Given("User is on {string} page")
     public void userIsOnPage(String pageAddress) {
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--remote-allow-origins=*");
+        Configuration.browserCapabilities = chromeOptions;
         open(pageAddress);
     }
 

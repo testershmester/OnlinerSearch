@@ -3,12 +3,13 @@ package by.teachmeskills.pages;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.WebDriverRunner;
 
+import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Selenide.*;
 
 public class OnlinerSearchPage {
 
     public void searchInCatalog(String searchText) {
-        $(".fast-search__input").sendKeys(searchText);
+        $(".fast-search__input").shouldBe(enabled).sendKeys(searchText);
     }
 
     public ElementsCollection getSearchResultProductTitles() {
